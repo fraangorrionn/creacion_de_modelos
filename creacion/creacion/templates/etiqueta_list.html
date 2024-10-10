@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Etiquetas</title>
+</head>
+<body>
+    {% extends "base.html" %}
+
+    {% block content %}
+    <h2>Lista de Etiquetas</h2>
+    <a href="{% url 'etiqueta_create' %}">Agregar Nueva Etiqueta</a>
+
+    <ul>
+        {% for etiqueta in etiquetas %}
+            <li>{{ etiqueta.nombre }}</li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+</body>
+</html>

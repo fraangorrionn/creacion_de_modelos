@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Usuario</title>
+</head>
+<body>
+    {% extends "base.html" %}
+
+    {% block content %}
+        <h2>Lista de Usuarios</h2>
+        <a href="{% url 'usuario_create' %}">Agregar Nuevo Usuario</a>
+
+        <ul>
+            {% for usuario in usuarios %}
+                <li>{{ usuario.nombre }} - {{ usuario.correo_electronico }}</li>
+            {% endfor %}
+        </ul>
+    {% endblock %}
+</body>
+</html>

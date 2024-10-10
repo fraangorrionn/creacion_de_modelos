@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Tareas</title>
+</head>
+<body>
+    {% extends "base.html" %}
+
+    {% block content %}
+    <h2>Lista de Tareas</h2>
+    <a href="{% url 'tarea_create' %}">Agregar Nueva Tarea</a>
+
+    <ul>
+        {% for tarea in tareas %}
+            <li>{{ tarea.titulo }} - {{ tarea.estado }}</li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+</body>
+</html>

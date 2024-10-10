@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Asignaciones de Tarea</title>
+</head>
+<body>
+    {% extends "base.html" %}
+
+    {% block content %}
+        <h2>Lista de Asignaciones de Tarea</h2>
+        <a href="{% url 'asignacion_create' %}">Agregar Nueva Asignación</a>
+
+        <ul>
+            {% for asignacion in asignaciones %}
+                <li>{{ asignacion.observaciones }} - {{ asignacion.fecha_asignacion }}</li>
+            {% endfor %}
+        </ul>
+    {% endblock %}
+</body>
+</html>

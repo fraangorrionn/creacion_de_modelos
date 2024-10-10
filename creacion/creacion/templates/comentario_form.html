@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Comentario</title>
+</head>
+<body>
+    {% extends "base.html" %}
+
+    {% block content %}
+        <h2>Crear Comentario</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Crear Comentario</button>
+        </form>
+        <a href="{% url 'comentario_list' %}">Volver a la lista de Comentarios</a>
+    {% endblock %}
+</body>
+</html>

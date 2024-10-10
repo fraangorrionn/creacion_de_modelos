@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Comentario</title>
+</head>
+<body>
+    {% extends "base.html" %}
+
+    {% block content %}
+        <h2>Lista de Comentarios</h2>
+        <a href="{% url 'comentario_create' %}">Agregar Nuevo Comentario</a>
+
+            <ul>
+            {% for comentario in comentarios %}
+                <li>{{ comentario.contenido }} - {{ comentario.fecha_comentario }}</li>
+            {% endfor %}
+        </ul>
+    {% endblock %}
+</body>
+</html>
