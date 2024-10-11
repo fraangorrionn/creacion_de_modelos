@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 
-# Modelo Usuario
 class Usuario(models.Model):
     nombre = models.CharField(max_length=100)
     correo_electronico = models.EmailField(unique=True)
@@ -11,27 +10,24 @@ class Usuario(models.Model):
     def __str__(self):
         return self.nombre
 
-# Modelo Proyecto
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField()
     duracion_estimada = models.FloatField()
     fecha_inicio = models.DateField()
     fecha_finalizacion = models.DateField(null=True, blank=True)
-    creador = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='proyectos_creados')  # Relación con Usuario (Creador)
-    colaboradores = models.ManyToManyField(Usuario, related_name='proyectos_asignados')  # Relación con Usuarios (Colaboradores)
+    creador = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='proyectos_creados')
+    colaboradores = models.ManyToManyField(Usuario, related_name='proyectos_asignados')
 
     def __str__(self):
         return self.nombre
 
-# Modelo Etiqueta
 class Etiqueta(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.nombre
 
-# Modelo Tarea
 class Tarea(models.Model):
     ESTADO_OPCIONES = [
         ('Pendiente', 'Pendiente'),
@@ -47,14 +43,13 @@ class Tarea(models.Model):
     fecha_creacion = models.DateField(default=timezone.now)
     hora_vencimiento = models.TimeField()
     
-    creador = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='tareas_creadas')  # Relación con Usuario (Creador)
-    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, related_name='tareas')  # Relación con Proyecto
-    etiquetas = models.ManyToManyField(Etiqueta, related_name='tareas_asociadas', blank=True)  # Relación con Etiquetas
+    creador = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='tareas_creadas') 
+    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, related_name='tareas')
+    etiquetas = models.ManyToManyField(Etiqueta, related_name='tareas_asociadas', blank=True)
 
     def __str__(self):
         return self.titulo
 
-# Modelo Asignación de Tarea (relación intermedia entre Tarea y Usuario)
 class AsignacionTarea(models.Model):
     tarea = models.ForeignKey(Tarea, on_delete=models.CASCADE, related_name='asignaciones')
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='asignaciones')
@@ -64,13 +59,12 @@ class AsignacionTarea(models.Model):
     def __str__(self):
         return f'{self.tarea.titulo} asignada a {self.usuario.nombre}'
 
-# Modelo Comentario
 class Comentario(models.Model):
     contenido = models.TextField()
     fecha_comentario = models.DateTimeField(default=timezone.now)
     
-    autor = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='comentarios')  # Relación con Usuario (Autor)
-    tarea = models.ForeignKey(Tarea, on_delete=models.CASCADE, related_name='comentarios')  # Relación con Tarea
+    autor = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='comentarios')
+    tarea = models.ForeignKey(Tarea, on_delete=models.CASCADE, related_name='comentarios')
 
     def __str__(self):
         return f'Comentario de {self.autor.nombre} en {self.tarea.titulo}'
